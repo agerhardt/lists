@@ -3,6 +3,7 @@ package de.age.lists;
 import java.util.AbstractList;
 import java.util.List;
 
+import de.age.lists.impl.EmptyList;
 import de.age.lists.impl.WholeContentList;
 
 public abstract class ImmutableList<E> implements Iterable<E> {
@@ -20,8 +21,7 @@ public abstract class ImmutableList<E> implements Iterable<E> {
 		if (start == 0 && end == size()) {
 			return this;
 		} else if (end - start == 0) {
-			// TODO use fixed empty list
-//			return new ImmutableList<>();
+			return new EmptyList<E>();
 		}
 		// TODO Auto-generated method stub
 		return null;
