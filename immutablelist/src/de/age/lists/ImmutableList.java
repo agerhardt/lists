@@ -25,6 +25,12 @@ public class ImmutableList<E> implements Iterable<E> {
 	}
 	
 	public ImmutableList<E> range(int start, int end) {
+		if (start == 0 && end == size()) {
+			return this;
+		} else if (end - start == 0) {
+			// TODO use fixed empty list
+			return new ImmutableList<>();
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
