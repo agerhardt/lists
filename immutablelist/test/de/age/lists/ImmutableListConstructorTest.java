@@ -13,7 +13,7 @@ public class ImmutableListConstructorTest {
 
 	@Test
 	public void canConstructWithNoElements() {
-		ImmutableList<Object> list = new ImmutableList<>();
+		ImmutableList<Object> list = ImmutableList.createList();
 		assertThat(list, is(notNullValue()));
 		assertThat(list.size(), is(0));
 	}
@@ -21,7 +21,7 @@ public class ImmutableListConstructorTest {
 	@Test
 	public void constructorWithOneElement() {
 		Object theObject = new Object();
-		ImmutableList<Object> list = new ImmutableList<>(theObject);
+		ImmutableList<Object> list = ImmutableList.createList(theObject);
 		assertThat(list, is(notNullValue()));
 		assertThat(list.size(), is(1));
 		assertThat(list.iterator().next(), is(sameInstance(theObject)));
@@ -29,6 +29,6 @@ public class ImmutableListConstructorTest {
 
 	@Test(expected=NullPointerException.class)
 	public void constructorWithNullListThrowsException() {
-		new ImmutableList<Object>((List<Object>) null);
+		ImmutableList.createList((List<Object>) null);
 	}
 }

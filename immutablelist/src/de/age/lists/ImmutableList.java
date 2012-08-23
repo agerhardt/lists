@@ -1,27 +1,19 @@
 package de.age.lists;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-public class ImmutableList<E> implements Iterable<E> {
+import de.age.lists.impl.WholeContentList;
 
-	private final List<E> elements;
-	
-	public ImmutableList(List<E> elements) {
-		if (elements == null) {
-			throw new NullPointerException();
-		}
-		List<E> temp = new ArrayList<>();
-		temp.addAll(elements);
-		this.elements = Collections.unmodifiableList(temp);
+public abstract class ImmutableList<E> implements Iterable<E> {
+
+	public static <E> ImmutableList<E> createList(List<E> elements) {
+		return new WholeContentList<>(elements);
 	}
 	
 	@SafeVarargs
-	public ImmutableList(E ... elements) {
-		this(wrap(elements));
+	public static <E> ImmutableList<E> createList(E ... elements) {
+		return createList(wrap(elements));
 	}
 	
 	public ImmutableList<E> range(int start, int end) {
@@ -29,7 +21,7 @@ public class ImmutableList<E> implements Iterable<E> {
 			return this;
 		} else if (end - start == 0) {
 			// TODO use fixed empty list
-			return new ImmutableList<>();
+//			return new ImmutableList<>();
 		}
 		// TODO Auto-generated method stub
 		return null;
@@ -55,14 +47,7 @@ public class ImmutableList<E> implements Iterable<E> {
 		return null;
 	}
 	
-	public int size() {
-		return elements.size();
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		return elements.iterator();
-	}
+	public abstract int size();
 	
 	private static <E> List<E> wrap(E[] array) {
 		if (array == null) {
