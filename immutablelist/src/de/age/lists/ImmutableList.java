@@ -4,6 +4,7 @@ import java.util.AbstractList;
 import java.util.List;
 
 import de.age.lists.impl.EmptyList;
+import de.age.lists.impl.RangeList;
 import de.age.lists.impl.WholeContentList;
 
 public abstract class ImmutableList<E> implements Iterable<E> {
@@ -23,8 +24,7 @@ public abstract class ImmutableList<E> implements Iterable<E> {
 		} else if (end - start == 0) {
 			return new EmptyList<E>();
 		}
-		// TODO Auto-generated method stub
-		return null;
+		return new RangeList<>(this, start, end);
 	}
 
 	public ImmutableList<E> append(E newElement) {
