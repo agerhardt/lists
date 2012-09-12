@@ -73,5 +73,32 @@ public class DoubeLinkDecoratorTest {
 		assertThat(middle.previous(), is(sameInstance(first)));
 		assertThat(first.next(), is(sameInstance(middle)));
 	}
+
+	@Test
+	public void removeJoinsSurroundingElements() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.append("last");
+		DoubleLinkDecorator<String> middle = first.append("middle");
+		middle.remove();
+		assertThat(first.next(), is(sameInstance(last)));
+		assertThat(last.previous(), is(sameInstance(first)));
+	}
 	
+	@Test
+	public void removeSetsNextAndPreviousToNull() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		first.append("last");
+		DoubleLinkDecorator<String> middle = first.append("middle");
+		middle.remove();
+		assertThat(middle.next(), is(nullValue()));
+		assertThat(middle.previous(), is(nullValue()));
+	}
+	
+	@Test
+	public void removeReturnsThis() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		first.append("last");
+		DoubleLinkDecorator<String> middle = first.append("middle");
+		assertThat(middle.remove(), is(sameInstance(middle)));
+	}
 }

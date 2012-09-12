@@ -44,4 +44,16 @@ public class DoubleLinkDecorator<T> {
 		return previous;
 	}
 
+	public DoubleLinkDecorator<T> remove() {
+		if (previous != null) {
+			previous.next = next;
+		}
+		if (next != null) {
+			next.previous = previous;
+		}
+		previous = null;
+		next = null;
+		return this;
+	}
+
 }
