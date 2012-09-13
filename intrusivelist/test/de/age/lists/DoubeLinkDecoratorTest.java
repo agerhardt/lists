@@ -6,6 +6,9 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import org.junit.Test;
 
 public class DoubeLinkDecoratorTest {
@@ -101,4 +104,58 @@ public class DoubeLinkDecoratorTest {
 		DoubleLinkDecorator<String> middle = first.append("middle");
 		assertThat(middle.remove(), is(sameInstance(middle)));
 	}
+	
+	@Test
+	public void headReturnsFirstElement() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.append("last");
+		first.append("middle");
+		assertThat(last.head(), is(sameInstance(first)));
+	}
+	
+	@Test
+	public void tailReturnsLastElement() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.append("last");
+		first.append("middle");
+		assertThat(first.tail(), is(sameInstance(last)));
+	}
+	
+	@Test
+	public void forwardReturnsCorrectIterator() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.append("last");
+		DoubleLinkDecorator<String> middle = first.append("middle");
+		Iterator<String> iter = first.forward();
+		assertThat(iter, is(notNullValue()));
+		assertThat(iter.hasNext(), is(true));
+		assertThat(iter.next(), is(sameInstance(middle.getObject())));
+		assertThat(iter.hasNext(), is(true));
+		assertThat(iter.next(), is(sameInstance(last.getObject())));
+		assertThat(iter.hasNext(), is(false));
+	}
+
+	@Test
+	public void backwardReturnsCorrectIterator() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.append("last");
+		DoubleLinkDecorator<String> middle = first.append("middle");
+		Iterator<String> iter = last.backward();
+		assertThat(iter, is(notNullValue()));
+		assertThat(iter.hasNext(), is(true));
+		assertThat(iter.next(), is(sameInstance(middle.getObject())));
+		assertThat(iter.hasNext(), is(true));
+		assertThat(iter.next(), is(sameInstance(first.getObject())));
+		assertThat(iter.hasNext(), is(false));
+	}
+	
+	@Test(expected=NoSuchElementException.class)
+	public void iteratorThrowsCorrectExceptionWhenNoFurtherElements() {
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		Iterator<String> iter = first.forward();
+		assertThat(iter, is(notNullValue()));
+		assertThat(iter.hasNext(), is(false));
+		iter.next();
+	}
+
 }
