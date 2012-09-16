@@ -11,6 +11,16 @@ import org.junit.Test;
 public class ImmutableListNewListCreationTest {
 
 	@Test
+	public void concatSingleElement() {
+		ImmutableList<Object> list = ImmutableList.createList();
+		Object object = new Object();
+		ImmutableList<Object> resultingList = list.append(object);
+		assertThat(resultingList, is(notNullValue()));
+		assertThat(resultingList.size(), is(1));
+		assertThat(resultingList.iterator().next(), is(sameInstance(object)));
+	}
+	
+	@Test
 	@Ignore
 	public void concatTwoEmptyLists() {
 		ImmutableList<Object> list1 = ImmutableList.createList();
