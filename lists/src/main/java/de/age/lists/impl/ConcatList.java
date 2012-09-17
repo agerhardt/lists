@@ -6,12 +6,12 @@ import de.age.lists.ImmutableList;
 
 public class ConcatList<E> extends ImmutableList<E> {
 
-	private final ImmutableList<E>[] sublists;
+	private final ImmutableList<E> firstList;
+	private final ImmutableList<E> secondList;
 	
 	public ConcatList(ImmutableList<E> firstList, ImmutableList<E> secondList) {
-		sublists = new ImmutableList[2];
-		sublists[0] = firstList;
-		sublists[1] = secondList;
+		this.firstList = firstList;
+		this.secondList = secondList;
 	}
 	
 	@Override
@@ -22,8 +22,7 @@ public class ConcatList<E> extends ImmutableList<E> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return firstList.size() + secondList.size();
 	}
 
 }

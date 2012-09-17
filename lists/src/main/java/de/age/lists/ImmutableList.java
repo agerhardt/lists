@@ -3,6 +3,7 @@ package de.age.lists;
 import java.util.AbstractList;
 import java.util.List;
 
+import de.age.lists.impl.ConcatList;
 import de.age.lists.impl.EmptyList;
 import de.age.lists.impl.RangeList;
 import de.age.lists.impl.WholeContentList;
@@ -28,8 +29,7 @@ public abstract class ImmutableList<E> implements Iterable<E> {
 	}
 
 	public ImmutableList<E> append(E newElement) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ConcatList<>(this, createList(newElement));
 	}
 
 	public ImmutableList<E> append(ImmutableList<E> newElements) {
