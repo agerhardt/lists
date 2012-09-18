@@ -10,39 +10,42 @@ public class ConcatIterator<E> implements Iterator<E> {
 	private DoubleLinkDecorator<Iterator<E>> currentIterator;
 
 	@SafeVarargs
-	public ConcatIterator(Iterator<E> ... iterators) {
-		if (iterators == null) {
+	public ConcatIterator(Iterable<E> ... iterables) {
+		if (iterables == null) {
 			throw new IllegalArgumentException();
 		}
 		Iterator<E> start = Collections.emptyIterator();
 		currentIterator = new DoubleLinkDecorator<>(start);
-		for (Iterator<E> iter : iterators) {
+		for (Iterable<E> iter : iterables) {
 			if (iter == null) {
 				throw new IllegalArgumentException();
 			}
-			if (iter.hasNext()) {
-				currentIterator = currentIterator.append(iter);
-			}
+			currentIterator = currentIterator.append(iter.iterator());
 		}
 		currentIterator = currentIterator.head();
 	}
 
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		nextNonEmptyIterator();
+		return currentIterator.getObject().hasNext();
+	}
+
+	private void nextNonEmptyIterator() {
+		while (!currentIterator.getObject().hasNext() && currentIterator.next() != null) {
+			currentIterator = currentIterator.next();
+		}
 	}
 
 	@Override
 	public E next() {
-		// TODO Auto-generated method stub
-		return null;
+		nextNonEmptyIterator();
+		return currentIterator.getObject().next();
 	}
 
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 	
 }
