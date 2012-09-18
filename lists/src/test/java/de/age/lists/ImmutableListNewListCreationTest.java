@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ImmutableListNewListCreationTest {
@@ -21,7 +20,6 @@ public class ImmutableListNewListCreationTest {
 	}
 	
 	@Test
-	@Ignore
 	public void concatTwoEmptyLists() {
 		ImmutableList<Object> list1 = ImmutableList.createList();
 		ImmutableList<Object> list2 = ImmutableList.createList();

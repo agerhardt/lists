@@ -16,8 +16,7 @@ public class ConcatList<E> extends ImmutableList<E> {
 	
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ConcatIterator<>(firstList, secondList);
 	}
 
 	@Override

@@ -33,8 +33,7 @@ public abstract class ImmutableList<E> implements Iterable<E> {
 	}
 
 	public ImmutableList<E> append(ImmutableList<E> newElements) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ConcatList<>(this, newElements);
 	}
 	
 	public ImmutableList<E> prepend(E newElement) {
