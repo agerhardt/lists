@@ -45,6 +45,41 @@ public class ImmutableListNewListCreationTest {
 		assertThat(iter.hasNext(), is(false));
 	}
 	
+	
+	@Test
+	public void prependSingleElement() {
+		ImmutableList<Object> list = ImmutableList.createList();
+		Object object = new Object();
+		ImmutableList<Object> resultingList = list.prepend(object);
+		assertThat(resultingList, is(notNullValue()));
+		assertThat(resultingList.size(), is(1));
+		assertThat(resultingList.iterator().next(), is(sameInstance(object)));
+	}
+	
+	@Test
+	public void prependEmptyList() {
+		ImmutableList<Object> list1 = ImmutableList.createList();
+		ImmutableList<Object> list2 = ImmutableList.createList();
+		ImmutableList<Object> resultingList = list1.prepend(list2);
+		assertThat(resultingList, is(notNullValue()));
+		assertThat(resultingList.size(), is(0));
+	}
+	
+	@Test
+	public void prependNonEmptyList() {
+		String first = "first";
+		String second = "second";
+		ImmutableList<String> list1 = ImmutableList.createList(first);
+		ImmutableList<String> list2 = ImmutableList.createList(second);
+		ImmutableList<String> resultingList = list1.prepend(list2);
+		assertThat(resultingList, is(notNullValue()));
+		assertThat(resultingList.size(), is(2));
+		Iterator<String> iter = resultingList.iterator();
+		assertThat(iter.next(), is(sameInstance(second)));
+		assertThat(iter.next(), is(sameInstance(first)));
+		assertThat(iter.hasNext(), is(false));
+	}
+	
 	@Test
 	public void wholeRangeReturnsSameInstance() {
 		ImmutableList<Object> list = ImmutableList.createList(new Object());
