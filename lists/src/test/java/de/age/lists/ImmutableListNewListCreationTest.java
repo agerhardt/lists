@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
+import java.util.Iterator;
+
 import org.junit.Test;
 
 public class ImmutableListNewListCreationTest {
@@ -20,12 +22,27 @@ public class ImmutableListNewListCreationTest {
 	}
 	
 	@Test
-	public void appendEmptyLists() {
+	public void appendEmptyList() {
 		ImmutableList<Object> list1 = ImmutableList.createList();
 		ImmutableList<Object> list2 = ImmutableList.createList();
 		ImmutableList<Object> resultingList = list1.append(list2);
 		assertThat(resultingList, is(notNullValue()));
 		assertThat(resultingList.size(), is(0));
+	}
+	
+	@Test
+	public void appendNonEmptyList() {
+		String first = "first";
+		String second = "second";
+		ImmutableList<String> list1 = ImmutableList.createList(first);
+		ImmutableList<String> list2 = ImmutableList.createList(second);
+		ImmutableList<String> resultingList = list1.append(list2);
+		assertThat(resultingList, is(notNullValue()));
+		assertThat(resultingList.size(), is(2));
+		Iterator<String> iter = resultingList.iterator();
+		assertThat(iter.next(), is(sameInstance(first)));
+		assertThat(iter.next(), is(sameInstance(second)));
+		assertThat(iter.hasNext(), is(false));
 	}
 	
 	@Test
