@@ -10,7 +10,7 @@ import org.junit.Test;
 public class ImmutableListNewListCreationTest {
 
 	@Test
-	public void concatSingleElement() {
+	public void appendSingleElement() {
 		ImmutableList<Object> list = ImmutableList.createList();
 		Object object = new Object();
 		ImmutableList<Object> resultingList = list.append(object);
@@ -20,7 +20,7 @@ public class ImmutableListNewListCreationTest {
 	}
 	
 	@Test
-	public void concatTwoEmptyLists() {
+	public void appendEmptyLists() {
 		ImmutableList<Object> list1 = ImmutableList.createList();
 		ImmutableList<Object> list2 = ImmutableList.createList();
 		ImmutableList<Object> resultingList = list1.append(list2);
