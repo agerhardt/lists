@@ -20,7 +20,7 @@ public class ConcatIterator<E> implements Iterator<E> {
 			if (iter == null) {
 				throw new IllegalArgumentException();
 			}
-			currentIterator = currentIterator.append(iter.iterator());
+			currentIterator = currentIterator.insertAfter(iter.iterator());
 		}
 		currentIterator = currentIterator.head();
 	}
@@ -28,11 +28,11 @@ public class ConcatIterator<E> implements Iterator<E> {
 	@Override
 	public boolean hasNext() {
 		nextNonEmptyIterator();
-		return currentIterator.getObject().hasNext();
+		return currentIterator.get().hasNext();
 	}
 
 	private void nextNonEmptyIterator() {
-		while (!currentIterator.getObject().hasNext() && currentIterator.next() != null) {
+		while (!currentIterator.get().hasNext() && currentIterator.next() != null) {
 			currentIterator = currentIterator.next();
 		}
 	}
@@ -40,7 +40,7 @@ public class ConcatIterator<E> implements Iterator<E> {
 	@Override
 	public E next() {
 		nextNonEmptyIterator();
-		return currentIterator.getObject().next();
+		return currentIterator.get().next();
 	}
 
 	@Override

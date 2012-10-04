@@ -17,7 +17,7 @@ public class DoubeLinkDecoratorTest {
 	public void constructorArgumentGetsReturned() {
 		Object expectedObject = new Object();
 		DoubleLinkDecorator<Object> dec = new DoubleLinkDecorator<Object>(expectedObject);
-		assertThat(dec.getObject(), is(sameInstance(expectedObject)));
+		assertThat(dec.get(), is(sameInstance(expectedObject)));
 	}
 	
 	@Test
@@ -28,50 +28,50 @@ public class DoubeLinkDecoratorTest {
 	}
 	
 	@Test
-	public void appendSetsLinksCorrectly() {
+	public void insertAfterSetsLinksCorrectly() {
 		DoubleLinkDecorator<String> dec = new DoubleLinkDecorator<>("first");
-		dec.append("next");
+		dec.insertAfter("next");
 		assertThat(dec.next(), is(notNullValue()));
 		assertThat(dec.next().previous(), is(sameInstance(dec)));
 	}
 	
 	@Test
-	public void appendReturnsAppendedElementsDecorator() {
+	public void insertAfterReturnsInsertedElementsDecorator() {
 		DoubleLinkDecorator<String> dec = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> next = dec.append("next");
+		DoubleLinkDecorator<String> next = dec.insertAfter("next");
 		assertThat(dec.next(), is(sameInstance(next)));
 	}
 	
 	@Test
-	public void appendInsertsAfter() {
+	public void insertAfterPlacesElementCorrectly() {
 		DoubleLinkDecorator<String> dec = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> last = dec.append("last");
-		DoubleLinkDecorator<String> middle = dec.append("middle");
+		DoubleLinkDecorator<String> last = dec.insertAfter("last");
+		DoubleLinkDecorator<String> middle = dec.insertAfter("middle");
 		assertThat(dec.next(), is(sameInstance(middle)));
 		assertThat(middle.next(), is(sameInstance(last)));
 		assertThat(last.previous(), is(sameInstance(middle)));
 	}
 
 	@Test
-	public void insertSetsLinksCorrectly() {
+	public void insertBeforeSetsLinksCorrectly() {
 		DoubleLinkDecorator<String> dec = new DoubleLinkDecorator<>("last");
-		dec.insert("previous");
+		dec.insertBefore("previous");
 		assertThat(dec.previous(), is(notNullValue()));
 		assertThat(dec.previous().next(), is(sameInstance(dec)));
 	}
 	
 	@Test
-	public void insertReturnsInsertedElementsDecorator() {
+	public void insertBeforeReturnsInsertedElementsDecorator() {
 		DoubleLinkDecorator<String> dec = new DoubleLinkDecorator<>("last");
-		DoubleLinkDecorator<String> previous = dec.insert("previous");
+		DoubleLinkDecorator<String> previous = dec.insertBefore("previous");
 		assertThat(dec.previous(), is(sameInstance(previous)));
 	}
 	
 	@Test
-	public void insertInsertsBefore() {
+	public void insertBeforeWorksCorrectly() {
 		DoubleLinkDecorator<String> last = new DoubleLinkDecorator<>("last");
-		DoubleLinkDecorator<String> first = last.insert("first");
-		DoubleLinkDecorator<String> middle = last.insert("middle");
+		DoubleLinkDecorator<String> first = last.insertBefore("first");
+		DoubleLinkDecorator<String> middle = last.insertBefore("middle");
 		assertThat(last.previous(), is(sameInstance(middle)));
 		assertThat(middle.previous(), is(sameInstance(first)));
 		assertThat(first.next(), is(sameInstance(middle)));
@@ -80,8 +80,8 @@ public class DoubeLinkDecoratorTest {
 	@Test
 	public void removeJoinsSurroundingElements() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> last = first.append("last");
-		DoubleLinkDecorator<String> middle = first.append("middle");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		DoubleLinkDecorator<String> middle = first.insertAfter("middle");
 		middle.remove();
 		assertThat(first.next(), is(sameInstance(last)));
 		assertThat(last.previous(), is(sameInstance(first)));
@@ -90,8 +90,8 @@ public class DoubeLinkDecoratorTest {
 	@Test
 	public void removeSetsNextAndPreviousToNull() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		first.append("last");
-		DoubleLinkDecorator<String> middle = first.append("middle");
+		first.insertAfter("last");
+		DoubleLinkDecorator<String> middle = first.insertAfter("middle");
 		middle.remove();
 		assertThat(middle.next(), is(nullValue()));
 		assertThat(middle.previous(), is(nullValue()));
@@ -100,52 +100,52 @@ public class DoubeLinkDecoratorTest {
 	@Test
 	public void removeReturnsThis() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		first.append("last");
-		DoubleLinkDecorator<String> middle = first.append("middle");
+		first.insertAfter("last");
+		DoubleLinkDecorator<String> middle = first.insertAfter("middle");
 		assertThat(middle.remove(), is(sameInstance(middle)));
 	}
 	
 	@Test
 	public void headReturnsFirstElement() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> last = first.append("last");
-		first.append("middle");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		first.insertAfter("middle");
 		assertThat(last.head(), is(sameInstance(first)));
 	}
 	
 	@Test
 	public void tailReturnsLastElement() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> last = first.append("last");
-		first.append("middle");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		first.insertAfter("middle");
 		assertThat(first.tail(), is(sameInstance(last)));
 	}
 	
 	@Test
 	public void forwardReturnsCorrectIterator() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> last = first.append("last");
-		DoubleLinkDecorator<String> middle = first.append("middle");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		DoubleLinkDecorator<String> middle = first.insertAfter("middle");
 		Iterator<String> iter = first.forward();
 		assertThat(iter, is(notNullValue()));
 		assertThat(iter.hasNext(), is(true));
-		assertThat(iter.next(), is(sameInstance(middle.getObject())));
+		assertThat(iter.next(), is(sameInstance(middle.get())));
 		assertThat(iter.hasNext(), is(true));
-		assertThat(iter.next(), is(sameInstance(last.getObject())));
+		assertThat(iter.next(), is(sameInstance(last.get())));
 		assertThat(iter.hasNext(), is(false));
 	}
 
 	@Test
 	public void backwardReturnsCorrectIterator() {
 		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
-		DoubleLinkDecorator<String> last = first.append("last");
-		DoubleLinkDecorator<String> middle = first.append("middle");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		DoubleLinkDecorator<String> middle = first.insertAfter("middle");
 		Iterator<String> iter = last.backward();
 		assertThat(iter, is(notNullValue()));
 		assertThat(iter.hasNext(), is(true));
-		assertThat(iter.next(), is(sameInstance(middle.getObject())));
+		assertThat(iter.next(), is(sameInstance(middle.get())));
 		assertThat(iter.hasNext(), is(true));
-		assertThat(iter.next(), is(sameInstance(first.getObject())));
+		assertThat(iter.next(), is(sameInstance(first.get())));
 		assertThat(iter.hasNext(), is(false));
 	}
 	

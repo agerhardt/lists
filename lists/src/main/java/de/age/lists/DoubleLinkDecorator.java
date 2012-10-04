@@ -13,7 +13,7 @@ public class DoubleLinkDecorator<T> {
 		this.object = object;
 	}
 
-	public T getObject() {
+	public T get() {
 		return object;
 	}
 	
@@ -25,7 +25,7 @@ public class DoubleLinkDecorator<T> {
 		return previous;
 	}
 
-	public DoubleLinkDecorator<T> append(T nextObject) {
+	public DoubleLinkDecorator<T> insertAfter(T nextObject) {
 		DoubleLinkDecorator<T> temp = next;
 		next = new DoubleLinkDecorator<>(nextObject);
 		next.next = temp;
@@ -36,7 +36,7 @@ public class DoubleLinkDecorator<T> {
 		return next;
 	}
 	
-	public DoubleLinkDecorator<T> insert(T previousObject) {
+	public DoubleLinkDecorator<T> insertBefore(T previousObject) {
 		DoubleLinkDecorator<T> temp = previous;
 		previous = new DoubleLinkDecorator<>(previousObject);
 		previous.previous = temp;
@@ -118,7 +118,7 @@ public class DoubleLinkDecorator<T> {
 				throw new NoSuchElementException();
 			}
 			current = next;
-			return current.getObject();
+			return current.get();
 		}
 
 		@Override
