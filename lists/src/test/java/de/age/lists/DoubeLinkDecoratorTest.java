@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -167,17 +166,22 @@ public class DoubeLinkDecoratorTest {
 	
 	@Test
 	public void findReturnsElementOnSameNode() {
-		fail();
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		assertThat(first.find("first"), is(sameInstance(first)));
 	}
 	
 	@Test
 	public void findReturnsElementAfterCurrentNode() {
-		fail();
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		assertThat(first.find("last"), is(sameInstance(last)));
 	}
 	
 	@Test
 	public void findReturnsElementBeforeCurrentNode() {
-		fail();
+		DoubleLinkDecorator<String> first = new DoubleLinkDecorator<>("first");
+		DoubleLinkDecorator<String> last = first.insertAfter("last");
+		assertThat(last.find("first"), is(sameInstance(first)));
 	}
 
 }

@@ -82,7 +82,21 @@ public class DoubleLinkDecorator<T> {
 	public Iterator<T> backward() {
 		return new DLDIterator<>(this, DLDIterator.Direction.backward);
 	}
-	
+
+	public DoubleLinkDecorator<T> find(T elementToFind) {
+		DoubleLinkDecorator<T> current = this;
+		while (current != null && current.get() != elementToFind) {
+			current = current.next();
+		}
+		if (current != null) {
+			return current;
+		}
+		current = this;
+		while (current != null && current.get() != elementToFind) {
+			current = current.previous();
+		}
+		return current;
+	}
 	
 	private static final class DLDIterator<T> implements Iterator<T> {
 		private static enum Direction {
@@ -126,11 +140,6 @@ public class DoubleLinkDecorator<T> {
 			throw new UnsupportedOperationException();
 		}
 		
-	}
-
-	public DoubleLinkDecorator<T> find(T elementToFind) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
