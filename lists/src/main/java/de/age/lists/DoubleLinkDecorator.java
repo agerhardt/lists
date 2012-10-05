@@ -128,4 +128,9 @@ public class DoubleLinkDecorator<T> {
 		
 	}
 
+	public DoubleLinkDecorator<T> find(T elementToFind) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
